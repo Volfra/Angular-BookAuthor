@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="card">
+      <h3 class="text-center">Book List</h3>
+      <div class="card-body">
+      <div class="form-group form-inline">
+        Search book by name:
+        <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm"
+          (input)="search($event.target.value)" />
+      </div>
+        <table class="table table-striped">
+          <thead>
+            <th>ISBN</th>
+            <th>NAME</th>
+            <th>PUBLISH DATE</th>
+            <th>AUTHORS</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of bookSet | listFilter: searchTerm ; let i = index " >
+              <td>{{item.isbn}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.publishDate | date : 'yyyy/MM/dd'}}</td>
+              <td>
+                <tr *ngFor="let aut of item.dataSetAuthors" >
+                    {{aut.name}}
+                </tr>
+              </td>
+              <td>
+                <button class="btn btn-info btn-sm"    
+                (click)="triggerModal(modalData, item)">
+                  Edit </button>
+                  &nbsp;
+                <button class='btn btn-danger btn-sm' (click)="deleteBook(item.isbn)" >
+                  Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+  <ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Book</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+  
+      <div style="width: 400px; margin: auto;">
+        <div class="submit-form">
+            <div class="form-group">
+              <label for="isbn">ISBN</label>
+              <input
+                disabled
+                type="text"
+                class="form-control"
+                id="isbn"
+                required
+                [(ngModel)]="currentBook.isbn"
+                name="isbn"
+              />
+            </div>
+            <div class="form-group">
+              <label for="name">NAME</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                required
+                [(ngModel)]="currentBook.name"
+                name="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="publishDate">PUBLISH DATE</label>
+              <input
+                type="date"
+                id="publishDate"
+                name="publishDate"
+                class="form-control"
+                value="currentBook.publishDate | date : 'MM/dd/yyyy'"
+                [(ngModel)]="currentBook.publishDate"   
+                required         
+              />
+
+              <input [matDatepicker]="myDatepicker">
+<mat-datepicker #myDatepicker></mat-datepicker>
+
+
+            </div>
+            {{currentBook.publishDate | date : 'MM/dd/yyyy'}}
+          </div>
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" 
+      (click)="updateBook()"
+      (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
