@@ -83,17 +83,12 @@
                 id="publishDate"
                 name="publishDate"
                 class="form-control"
-                value="currentBook.publishDate | date : 'MM/dd/yyyy'"
-                [(ngModel)]="currentBook.publishDate"   
+                [ngModel]="currentBook.publishDate | date:'yyyy-MM-dd'"
+                (ngModelChange)="currentBook.publishDate = $event"
                 required         
               />
 
-              <input [matDatepicker]="myDatepicker">
-<mat-datepicker #myDatepicker></mat-datepicker>
-
-
             </div>
-            {{currentBook.publishDate | date : 'MM/dd/yyyy'}}
           </div>
       </div>
     
