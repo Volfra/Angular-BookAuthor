@@ -1,3 +1,5 @@
+<form #myForm="ngForm">
+
 <div class="container">
     <div class="card">
       <h3 class="text-center">Book List</h3>
@@ -88,6 +90,20 @@
                 required         
               />
 
+              <div class="form-group">
+                <label for="authors">AUTHORS</label>
+                  <ng-select
+                    bindLabel="name"
+                    placeholder="Select Author"
+                    appendTo="body"
+                    multiple="true"
+                    [items]="authorSet"
+                    [(ngModel)]="currentBook.dataSetAuthors"
+                    name="authors"
+                    >
+                  </ng-select>
+              </div>
+
             </div>
           </div>
       </div>
@@ -99,3 +115,5 @@
       (click)="modal.close('Save click')">Save</button>
     </div>
   </ng-template>
+
+</form>

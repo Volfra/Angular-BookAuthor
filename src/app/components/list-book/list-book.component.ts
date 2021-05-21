@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/model/book';
 import { BookService } from 'src/app/services/book.service';
+import { AuthorService } from 'src/app/services/author.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Author } from 'src/app/model/author';
   
@@ -13,6 +14,7 @@ export class ListBookComponent implements OnInit {
 
     bookSet: Book[];
     bookFil: Book[];
+    authorSet: Author[];
     isbnBook : string;
     collectionSize: number;
     searchTerm: string;
@@ -22,7 +24,11 @@ export class ListBookComponent implements OnInit {
     currentBook = null;
     currentIndex = -1;
     
-    constructor(private bookService: BookService, private modalService: NgbModal) { }
+    constructor(private bookService: BookService,  
+                  private authorService: AuthorService, 
+                    private modalService: NgbModal) { 
+                      this.getAuthors() 
+                    }
   
     ngOnInit(): void {
       this.refreshList();
@@ -111,6 +117,17 @@ export class ListBookComponent implements OnInit {
       this.retrieveBooks();
     }
   
+    getAuthors() {
+      this.authorService.getAll()
+      .subscribe(
+        data => {
+          this.authorSet = data;
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+    }
   
   
   }

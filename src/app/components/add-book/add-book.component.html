@@ -50,12 +50,9 @@
                     placeholder="Select Author"
                     appendTo="body"
                     multiple="true"
+                    [items]="authorSet"
                     [(ngModel)]="book.dataSetAuthors"
                     name="authors">
-                      <ng-option *ngFor="let a of authorSet" 
-                        [value]="a" >
-                        {{a.name}}
-                      </ng-option>
                   </ng-select>
               </div>
                
