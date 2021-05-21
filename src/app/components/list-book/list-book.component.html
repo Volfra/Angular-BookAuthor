@@ -21,7 +21,7 @@
             <tr *ngFor="let item of bookSet | listFilter: searchTerm ; let i = index " >
               <td>{{item.isbn}}</td>
               <td>{{item.name}}</td>
-              <td>{{item.publishDate | date : 'yyyy/MM/dd'}}</td>
+              <td>{{item.publishDate | date:'mediumDate':'+0530'}}</td>
               <td>
                 <tr *ngFor="let aut of item.dataSetAuthors" >
                     {{aut.name}}
@@ -85,7 +85,7 @@
                 id="publishDate"
                 name="publishDate"
                 class="form-control"
-                [ngModel]="currentBook.publishDate | date:'yyyy-MM-dd'"
+                [ngModel]="currentBook.publishDate | date:'yyyy-MM-dd':'+0530'"
                 (ngModelChange)="currentBook.publishDate = $event"
                 required         
               />
